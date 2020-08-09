@@ -32,8 +32,8 @@ public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "mid", type = IdType.AUTO)
-    private Integer mid;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String name;
 //要加相关依赖
@@ -54,7 +54,7 @@ public class Product implements Serializable {
 
     private Integer stock;
 
-    private Integer id;
+    private Integer cid;
 
     @TableField("createDate")
     private Date createDate;

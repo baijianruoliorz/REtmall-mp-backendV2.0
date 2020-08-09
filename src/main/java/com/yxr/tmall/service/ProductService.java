@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-08-08
  */
 public interface ProductService extends IService<Product> {
-
+//   删除商品
+    void removeProduct(String productId);
 }
