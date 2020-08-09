@@ -2,6 +2,7 @@ package com.yxr.tmall.controller;
 
 
 import com.yxr.tmall.commonUtils.R;
+import com.yxr.tmall.config.MD5;
 import com.yxr.tmall.entity.User;
 import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.mapper.UserMapper;
@@ -38,8 +39,11 @@ public class UserController {
     private UserService userService;
     @PostMapping("/register")
     public R register(@RequestBody User user){
+        String s = String.valueOf(System.currentTimeMillis());
+        user.setSalt(s);
         String name = user.getName();
         String password = user.getPassword();
+        user.setPassword(MD5.encrypt(password+s));
         userService.isExist(name);
         userService.save(user);
        return R.ok();
@@ -47,7 +51,12 @@ public class UserController {
 
     @PostMapping("/login")
     public R login(@RequestBody User user){
-        User userLogin = userMapper.queryUserByname(user.getName());
+        User user1 = userMapper.queryUserByname(user.getName());
+        String password = user.getPassword();
+        String s=password+user1.getSalt();
+        s=MD5.encrypt(s);
+
+        User userLogin = userMapper.getByNameAndPassword(user.getName(),s);
         if (userLogin==null){
             throw new GuliException(20001,"用户名或密码错误!!!");
         }else {

@@ -6,6 +6,6 @@
         select * from user where name = #{name}
     </select>
     <select id="getByNameAndPassword" resultType="com.yxr.tmall.entity.User">
-        select * from user where name= #{name} and password= #{password}
+        select * from user where name= #{name} and  password= #{password}
     </select>
 </mapper>
