@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-08-08
  */
 public interface UserService extends IService<User> {
+    public User queryUserByname(String name);
 
+    void isExist(String name);
 }
