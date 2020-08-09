@@ -5,6 +5,10 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.github.dreamyoung.mprelation.AutoLazy;
+import com.github.dreamyoung.mprelation.JoinColumn;
+import com.github.dreamyoung.mprelation.ManyToOne;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,6 +23,7 @@ import lombok.experimental.Accessors;
  * @author liqiqiorz
  * @since 2020-08-08
  */
+@AutoLazy
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
@@ -27,10 +32,16 @@ public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "mid", type = IdType.AUTO)
+    private Integer mid;
 
     private String name;
+//要加相关依赖
+    @ManyToOne
+    @JoinColumn(name="id",referencedColumnName="id")
+    @TableField(exist = false)  //字段可以不包含这个
+    private Category category;
+
 
     @TableField("subTitle")
     private String subTitle;
@@ -43,7 +54,7 @@ public class Product implements Serializable {
 
     private Integer stock;
 
-    private Integer cid;
+    private Integer id;
 
     @TableField("createDate")
     private Date createDate;

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yxr.tmall.commonUtils.R;
 import com.yxr.tmall.entity.Category;
+import com.yxr.tmall.mapper.ProductMapper;
 import com.yxr.tmall.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/tmall/category")
 public class CategoryController {
+
+
 
     @Autowired
     private CategoryService categoryService;
@@ -83,9 +86,35 @@ public class CategoryController {
 //        数据的list集合
         List<Category> records=pageCategories.getRecords();
         return R.ok().data("total",total).data("rows",records);
-
+    }
+//default
+//    添加分类的方法
+    @PostMapping("addCategory")
+    public R addCategory(@RequestBody Category category){
+        boolean save = categoryService.save(category);
+        if (save){
+            return R.ok();
+        }else {
+            return R.error();
+        }
     }
 
+//    修改分类: 1.查询分类回显 2.修改
+    @GetMapping("getCategory/{id}")
+    public R getCategory(@PathVariable String id){
+        Category byId = categoryService.getById(id);
+        return R.ok().data("category",byId);
+    }
+//修改,一般来说用put提交,但是参数是@requBody
+    @PostMapping R updateCategory(@RequestBody Category category) {
+        boolean b = categoryService.updateById(category);
+    if(b){
+        return R.ok();
+    }else {
+        return R.error();
+    }
+
+    }
 
 }
 
