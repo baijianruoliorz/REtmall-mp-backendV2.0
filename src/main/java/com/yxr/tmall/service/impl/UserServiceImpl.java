@@ -1,5 +1,6 @@
 package com.yxr.tmall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yxr.tmall.entity.User;
 import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.mapper.UserMapper;
@@ -7,6 +8,8 @@ import com.yxr.tmall.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,5 +35,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user!=null){
             throw new GuliException(20001,"用户名已存在");
         }
+    }
+
+    @Override
+    public List<User> searchByName(String name) {
+
+        List<User> userList = baseMapper.selectList(new QueryWrapper<User>().like("name", name));
+        return userList;
     }
 }

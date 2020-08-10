@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yxr.tmall.commonUtils.R;
 import com.yxr.tmall.entity.Category;
+import com.yxr.tmall.entity.Product;
+import com.yxr.tmall.mapper.CategoryMapper;
 import com.yxr.tmall.mapper.ProductMapper;
 import com.yxr.tmall.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +34,8 @@ import java.util.List;
 public class CategoryController {
 
 
-
+@Autowired
+private CategoryMapper categoryMapper;
     @Autowired
     private CategoryService categoryService;
 //default
@@ -114,6 +117,15 @@ public class CategoryController {
         return R.error();
     }
 
+    }
+
+    @GetMapping("products/{id}")
+    public R CProducts(@PathVariable String id){
+        Category category = categoryService.getById(id);
+        int i = Integer.parseInt(id);
+        List<Product> products = categoryMapper.searchProductsByCategoryId(i);
+        category.setProducts(products);
+        return R.ok().data("category",category);
     }
 
 }

@@ -13,13 +13,17 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.convert.EntityWriter;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -62,6 +66,13 @@ public class UserController {
         }else {
             return R.ok().data("user",userLogin);
         }
+    }
+
+//    模糊查询
+    @PostMapping("/search")
+    public R searchUserInfo(@RequestParam("name") String name){
+        List<User> users = userService.searchByName(name);
+        return R.ok().data("userList",users);
     }
 
 }

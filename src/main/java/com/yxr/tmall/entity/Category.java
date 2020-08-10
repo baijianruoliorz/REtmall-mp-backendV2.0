@@ -38,6 +38,6 @@ public class Category implements Serializable {
     @TableField(exist = false)
     @OneToMany
     @JoinColumn(name = "id",referencedColumnName = "id")
- private List<Product> products;
+    private List<Product> products;
 
 }

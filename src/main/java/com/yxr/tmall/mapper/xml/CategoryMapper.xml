@@ -3,4 +3,10 @@
 <mapper namespace="com.yxr.tmall.mapper.CategoryMapper">
 
 
+
+    <select id="searchProductsByCategoryId" resultType="com.yxr.tmall.entity.Product">
+        select a.id,a.name,a.subTitle,a.originalPrice,a.promotePrice,a.stock,a.cid,a.createDate from product a,category b where a.cid = #{id}
+    </select>
+    <select id="tsearchProductsByCategoryId" resultType="com.yxr.tmall.entity.Product"></select>
+
 </mapper>
