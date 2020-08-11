@@ -15,8 +15,15 @@ TODO:shiro控制权限,redis进行缓存,elasticsearch进行百万级数据秒�
 
 docker 运行:
 
-docker rm tmall -f
+docker rm tmallers -f
 
 docker rmi liqiqiorz/tmaller
 
 docker run --name tmallers -d -p 8002:8002 liqiqiorz/tmaller:latest
+
+API:http://112.126.78.122:8004(我的8002在另一个项目所以映射8004)
+
+该项目可视化页面目前只有swagger文档.
+
+
+
