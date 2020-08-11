@@ -12,3 +12,11 @@ TODO:shiro控制权限,redis进行缓存,elasticsearch进行百万级数据秒�
 2020.08.09 第一代仓库已删
 
 后续开发将基于此版本..
+
+docker 运行:
+
+docker rm tmall -f
+
+docker rmi liqiqiorz/tmaller
+
+docker run --name tmallers -d -p 8002:8002 liqiqiorz/tmaller:latest
