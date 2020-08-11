@@ -29,15 +29,15 @@ public final class MD5 {
         }
     }
 //用法
-    public static void main(String[] args) {
-        System.out.println(MD5.encrypt("111111"));
-       //获取当前时间戳,要用于md5加密
-        long t1=System.currentTimeMillis();
-        System.out.println(t1);
-        String s = String.valueOf(t1);
-        System.out.println(s);
-
-    }
+//    public static void main(String[] args) {
+//        System.out.println(MD5.encrypt("111111"));
+//       //获取当前时间戳,要用于md5加密
+//        long t1=System.currentTimeMillis();
+//        System.out.println(t1);
+//        String s = String.valueOf(t1);
+//        System.out.println(s);
+//
+//    }
 
 
 }
