@@ -16,7 +16,7 @@ public class EasterEggController {
                 " but this one isn't has a frontend now," +
                 " you can visit my github and pull it to develop by yourself," +
                 " yours sincerely:" +
-                " liqiqiorz. " +
+                " liqiqiorz." +
                 " twitter:@roz97101";
     }
 }
