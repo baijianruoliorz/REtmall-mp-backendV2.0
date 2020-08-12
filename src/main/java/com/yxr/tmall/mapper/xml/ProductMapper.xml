@@ -2,4 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yxr.tmall.mapper.ProductMapper">
 
+    <select id="searchProduct" resultType="com.yxr.tmall.entity.Product">
+        select * from product where name like CONCAT('%',#{productName},'%')
+    </select>
+
 </mapper>

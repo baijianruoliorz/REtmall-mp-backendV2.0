@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -26,5 +28,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         if (i==0){
             throw new GuliException(20001,"删除失败");
         }
+    }
+
+    @Override
+    public List<Product> searchProduct(String productName) {
+        return baseMapper.searchProduct(productName);
     }
 }

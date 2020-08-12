@@ -3,6 +3,8 @@ package com.yxr.tmall.service;
 import com.yxr.tmall.entity.Product;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -14,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ProductService extends IService<Product> {
 //   删除商品
     void removeProduct(String productId);
+
+    List<Product> searchProduct(String productName);
 }

@@ -64,6 +64,13 @@ private ProductMapper productMapper;
       return R.ok();
     }
 
+//    根据名称模糊查询
+    @PostMapping("/search")
+    public R searchProduct(@RequestParam String productName){
+      List<Product> products=productService.searchProduct(productName);
+      return R.ok().data("productList",products);
+    }
+
 
 
 }
