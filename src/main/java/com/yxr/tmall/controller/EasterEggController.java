@@ -17,6 +17,6 @@ public class EasterEggController {
                 " you can visit my github and pull it to develop by yourself," +
                 " yours sincerely:" +
                 " liqiqiorz." +
-                " twitter:@roz97101";
+                " twitter:@roz97101 ";
     }
 }
