@@ -15,13 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.convert.EntityWriter;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -73,6 +67,12 @@ public class UserController {
     public R searchUserInfo(@RequestParam("name") String name){
         List<User> users = userService.searchByName(name);
         return R.ok().data("userList",users);
+    }
+
+    @GetMapping("whoami/{id}")
+    public R whoAmI(@PathVariable String id){
+        User user = userService.getById(id);
+        return R.ok().data("You are...:",user);
     }
 
 }
