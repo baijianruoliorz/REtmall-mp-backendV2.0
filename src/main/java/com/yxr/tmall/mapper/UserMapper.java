@@ -19,10 +19,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
-    public User queryUserByname(@Param("name") String name);
+    User queryUserByname(@Param("name") String name);
 //    两个参数必须要加@param,一个参数可以省略
     User getByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
+    User getUserByToken(String token);
 
+    void keepTokenById(@Param("id") Integer id, @Param("token") String token);
 
+    void keepTokenByIds(@Param("id") String id);
 }

@@ -43,4 +43,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<User> userList = baseMapper.selectList(new QueryWrapper<User>().like("name", name));
         return userList;
     }
+
+    @Override
+    public User getUserByToken(String token) {
+        return userMapper.getUserByToken(token);
+    }
 }

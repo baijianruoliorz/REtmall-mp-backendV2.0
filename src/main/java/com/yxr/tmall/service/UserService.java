@@ -15,11 +15,12 @@ import java.util.List;
  * @since 2020-08-08
  */
 public interface UserService extends IService<User> {
-    public User queryUserByname(String name);
+     User queryUserByname(String name);
 
     void isExist(String name);
 
 //    模糊查询
     List<User> searchByName(String name);
 
+    User getUserByToken(String token);
 }

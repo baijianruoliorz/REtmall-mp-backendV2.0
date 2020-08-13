@@ -7,16 +7,11 @@ import com.yxr.tmall.entity.User;
 import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.mapper.UserMapper;
 import com.yxr.tmall.service.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.convert.EntityWriter;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -48,9 +43,25 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public R login(@RequestBody User user){
+    public R login(@RequestBody User user, HttpServletRequest request){
+        User user2 = userService.queryUserByname(user.getName());
+
+        HttpSession session = request.getSession();
+
+        System.out.println(session.getId());
+        if (user2==null){
+            return R.error().message("用户不存在,请创造一个新用户!!!");
+        }
+        if (user2.getToken()!=null){
+
+            return R.error().message("该用户已经登录");
+        }
+        user.setToken(session.getId());
+        userMapper.keepTokenById(user2.getId(),user.getToken());
+
         User user1 = userMapper.queryUserByname(user.getName());
         String password = user.getPassword();
+
         String s=password+user1.getSalt();
         s=MD5.encrypt(s);
 
@@ -59,6 +70,18 @@ public class UserController {
             throw new GuliException(20001,"用户名或密码错误!!!");
         }else {
             return R.ok().data("user",userLogin);
+        }
+    }
+    @GetMapping("/logout/{id}")
+    public R logout(@PathVariable String id){
+        User user = userService.getById(id);
+        if (user.getToken()==null){
+            return R.error().message("该用户未登录..无法退出");
+        }
+        else {
+            user.setToken(null);
+            userMapper.keepTokenByIds(id);
+            return R.ok().message("登出成功!");
         }
     }
 
@@ -74,6 +97,13 @@ public class UserController {
         User user = userService.getById(id);
         return R.ok().data("You are...:",user);
     }
+    @GetMapping(("/saveUserByToken"))
+    public R saveUser(String token){
+       User user= userService.getUserByToken(token);
+       return R.ok().data("user",user);
+    }
+
+
 
 }
 
