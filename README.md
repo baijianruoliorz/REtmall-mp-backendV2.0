@@ -23,6 +23,18 @@ docker run --name tmallers -d -p 8002:8002 liqiqiorz/tmaller:latest
 
 API:http://112.126.78.122:8004(我的8002在另一个项目所以映射8004)
 
+08.14:更新:emm发现了一件沙雕的事,我没有把数据库参数变成可变参数,类似与{},所以你们下载的镜像
+
+所用的数据会直接和我服务器上的进行同步...
+
+貌似要改改dockerFile 的ENTRYPOINT命令参数...
+
+暂时鸽几天吧...
+
+话说看我的dockerhub关于这个镜像已经有300+的download了
+
+这让萌新是没想到的...
+
 该项目可视化页面目前只有swagger文档.
 
 
