@@ -32,6 +32,10 @@ public class ReviewController {
         System.out.println(user);
 
         Review review = reviewService.getById(id);
+        if (user.getId().equals(review.getUid())==false){
+            return R.error().message("不能查询他人的评论哦!");
+        }
+       // review.setUid(user.getId()); 增加评论的时候加入
         review.setUser(user);
         return R.ok().data("review",review);
     }

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 import com.github.dreamyoung.mprelation.JoinColumn;
+import com.github.dreamyoung.mprelation.ManyToOne;
 import com.github.dreamyoung.mprelation.OneToMany;
 import com.github.dreamyoung.mprelation.OneToOne;
 import io.swagger.annotations.ApiModel;
@@ -44,7 +45,7 @@ public class Review implements Serializable {
     private Date createDate;
 
     @TableField(exist = false)
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id",referencedColumnName = "id")
     private User user;
 

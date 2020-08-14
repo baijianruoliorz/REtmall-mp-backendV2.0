@@ -45,7 +45,7 @@ public class UserController {
     @PostMapping("/login")
     public R login(@RequestBody User user, HttpServletRequest request,HttpSession httpSession){
         User user2 = userService.queryUserByname(user.getName());
-        httpSession.setAttribute("user",user2);
+
         HttpSession session = request.getSession();
 
         System.out.println("+++++++");
@@ -54,10 +54,12 @@ public class UserController {
             return R.error().message("用户不存在,请创造一个新用户!!!");
         }
         if (user2.getToken()!=null){
-
+            httpSession.setAttribute("user",user2);
             return R.error().message("该用户已经登录");
         }
         user.setToken(session.getId());
+        user2.setToken(session.getId());
+        httpSession.setAttribute("user",user2);
         userMapper.keepTokenById(user2.getId(),user.getToken());
 
         User user1 = userMapper.queryUserByname(user.getName());
