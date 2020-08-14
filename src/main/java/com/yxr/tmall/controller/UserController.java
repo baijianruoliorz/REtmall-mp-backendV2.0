@@ -43,12 +43,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public R login(@RequestBody User user, HttpServletRequest request){
+    public R login(@RequestBody User user, HttpServletRequest request,HttpSession httpSession){
         User user2 = userService.queryUserByname(user.getName());
-
+        httpSession.setAttribute("user",user2);
         HttpSession session = request.getSession();
 
-        System.out.println(session.getId());
+        System.out.println("+++++++");
+        System.out.println(session.getId()==httpSession.getId());
         if (user2==null){
             return R.error().message("用户不存在,请创造一个新用户!!!");
         }

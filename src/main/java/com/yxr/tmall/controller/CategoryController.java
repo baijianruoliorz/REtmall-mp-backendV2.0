@@ -45,6 +45,10 @@ private CategoryMapper categoryMapper;
         List<Category> list=categoryService.list(null);
         return R.ok().data("list",list);
     }
+
+
+
+
 //    default
 //分页加多条件查询:1配插件 educonfig 2写方法
     @GetMapping("/categories/{current}/{limit}")
@@ -125,6 +129,12 @@ private CategoryMapper categoryMapper;
         int i = Integer.parseInt(id);
         List<Product> products = categoryMapper.searchProductsByCategoryId(i);
         category.setProducts(products);
+        return R.ok().data("category",category);
+    }
+
+    @GetMapping("getCategorys/{id}")
+    public R getCategorys(@PathVariable String id){
+        Category category = categoryService.getById(id);
         return R.ok().data("category",category);
     }
 

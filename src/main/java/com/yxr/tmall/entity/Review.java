@@ -5,6 +5,10 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.github.dreamyoung.mprelation.JoinColumn;
+import com.github.dreamyoung.mprelation.OneToMany;
+import com.github.dreamyoung.mprelation.OneToOne;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -39,5 +43,10 @@ public class Review implements Serializable {
     @TableField("createDate")
     private Date createDate;
 
+    @TableField(exist = false)
+    @OneToOne
+    @JoinColumn(name = "id",referencedColumnName = "id")
+    private User user;
 
 }
+
