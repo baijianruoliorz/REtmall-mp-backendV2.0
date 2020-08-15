@@ -15,6 +15,9 @@
         select * from user where name= #{name} and  password= #{password}
     </select>
     <select id="getUserByToken" resultType="com.yxr.tmall.entity.User">
-        select @ from user where token = #{token}
+        select * from user where token = #{token}
+    </select>
+    <select id="selectList" resultType="com.yxr.tmall.entity.Review">
+        select * from review where uid=#{id}
     </select>
 </mapper>

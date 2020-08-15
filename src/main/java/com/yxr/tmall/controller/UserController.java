@@ -3,6 +3,7 @@ package com.yxr.tmall.controller;
 
 import com.yxr.tmall.commonUtils.R;
 import com.yxr.tmall.config.MD5;
+import com.yxr.tmall.entity.Review;
 import com.yxr.tmall.entity.User;
 import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.mapper.UserMapper;
@@ -76,13 +77,14 @@ public class UserController {
         }
     }
     @GetMapping("/logout/{id}")
-    public R logout(@PathVariable String id){
+    public R logout(@PathVariable String id,HttpSession session){
         User user = userService.getById(id);
         if (user.getToken()==null){
             return R.error().message("该用户未登录..无法退出");
         }
         else {
             user.setToken(null);
+            session.setAttribute("user",null);
             userMapper.keepTokenByIds(id);
             return R.ok().message("登出成功!");
         }
@@ -104,6 +106,12 @@ public class UserController {
     public R saveUser(String token){
        User user= userService.getUserByToken(token);
        return R.ok().data("user",user);
+    }
+
+    @GetMapping("selectAllReview/{id}")
+    public R selectAllReview(@PathVariable String id){
+       List<Review> reviews=userService.selectAllReview(id);
+       return R.ok().data("reviews",reviews);
     }
 
 

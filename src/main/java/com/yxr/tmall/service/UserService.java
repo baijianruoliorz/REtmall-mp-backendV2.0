@@ -1,6 +1,7 @@
 package com.yxr.tmall.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.yxr.tmall.entity.Review;
 import com.yxr.tmall.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -23,4 +24,6 @@ public interface UserService extends IService<User> {
     List<User> searchByName(String name);
 
     User getUserByToken(String token);
+
+    List<Review> selectAllReview(String id);
 }

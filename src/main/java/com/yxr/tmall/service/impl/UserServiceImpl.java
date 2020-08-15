@@ -1,6 +1,7 @@
 package com.yxr.tmall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yxr.tmall.entity.Review;
 import com.yxr.tmall.entity.User;
 import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.mapper.UserMapper;
@@ -47,5 +48,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getUserByToken(String token) {
         return userMapper.getUserByToken(token);
+    }
+
+    @Override
+    public List<Review> selectAllReview(String id) {
+
+        return userMapper.selectList(id);
     }
 }

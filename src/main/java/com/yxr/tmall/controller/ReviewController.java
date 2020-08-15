@@ -4,10 +4,12 @@ package com.yxr.tmall.controller;
 import com.yxr.tmall.commonUtils.R;
 import com.yxr.tmall.entity.Review;
 import com.yxr.tmall.entity.User;
+import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -41,9 +43,15 @@ public class ReviewController {
     }
 
     @PostMapping("addReview")
-    public R addReview(@RequestBody Review review)
+    public R addReview(@RequestBody Review review, HttpServletRequest httpServletRequest)
     {
         review.setCreateDate(new Date());
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User)session.getAttribute("user");
+        if (user==null){
+            throw new GuliException(20001,"您当前未登录,请登录后发表评论!!!");
+        }
+        review.setUid(user.getId());
         reviewService.save(review);
         return  R.ok();
     }

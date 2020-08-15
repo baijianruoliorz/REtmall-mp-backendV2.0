@@ -1,11 +1,14 @@
 package com.yxr.tmall.mapper;
 
+import com.yxr.tmall.entity.Review;
 import com.yxr.tmall.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,4 +31,6 @@ public interface UserMapper extends BaseMapper<User> {
     void keepTokenById(@Param("id") Integer id, @Param("token") String token);
 
     void keepTokenByIds(@Param("id") String id);
+
+    List<Review> selectList(String id);
 }
