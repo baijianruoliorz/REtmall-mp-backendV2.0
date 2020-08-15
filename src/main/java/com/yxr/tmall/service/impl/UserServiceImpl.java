@@ -50,9 +50,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.getUserByToken(token);
     }
 
-    @Override
-    public List<Review> selectAllReview(String id) {
-
-        return userMapper.selectList(id);
-    }
+//    @Override
+//    public List<Review> selectAllReview(String id) {
+//
+//        List<Review> uid = baseMapper.selectList(new QueryWrapper<Review>().eq("uid", id));
+//    }
 }

@@ -61,6 +61,15 @@ public class ReviewController {
         return R.ok();
     }
 
+//    回复一条评论
+    @PostMapping("/reply/review")
+    public R reply(@RequestParam Review review){
+//     查询出父评论
+
+        return R.ok();
+
+    }
+
 
 }
 

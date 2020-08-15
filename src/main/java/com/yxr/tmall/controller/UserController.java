@@ -7,6 +7,7 @@ import com.yxr.tmall.entity.Review;
 import com.yxr.tmall.entity.User;
 import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.mapper.UserMapper;
+import com.yxr.tmall.service.ReviewService;
 import com.yxr.tmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,9 @@ import java.util.List;
 @RequestMapping("/tmall/user")
 public class UserController {
 
+
+    @Autowired
+    private ReviewService reviewService;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -110,7 +114,7 @@ public class UserController {
 
     @GetMapping("selectAllReview/{id}")
     public R selectAllReview(@PathVariable String id){
-       List<Review> reviews=userService.selectAllReview(id);
+       List<Review> reviews=reviewService.selectAllReview(id);
        return R.ok().data("reviews",reviews);
     }
 

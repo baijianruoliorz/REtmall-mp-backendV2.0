@@ -5,6 +5,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
 
 import com.github.dreamyoung.mprelation.JoinColumn;
 import com.github.dreamyoung.mprelation.ManyToOne;
@@ -41,6 +42,8 @@ public class Review implements Serializable {
 
     private Integer pid;
 
+    private Integer vid;
+
     @TableField("createDate")
     private Date createDate;
 
@@ -48,6 +51,14 @@ public class Review implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id",referencedColumnName = "id")
     private User user;
+//    评论回复
+    @TableField(exist = false)
+    private List<Review> reviewList;
+//父评论
+    @TableField(exist = false)
+    private Review parentComment;
+
+
 
 }
 
