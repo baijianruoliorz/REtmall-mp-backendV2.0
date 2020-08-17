@@ -27,4 +27,10 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> impleme
     public List<Review> selectAllReview(String id) {
        return reviewMapper.selectList(new QueryWrapper<Review>().eq("uid",id));
     }
+
+    @Override
+    public List<Review> selectByparentId(String id) {
+       List<Review> reviews = reviewMapper.findParentId(id);
+       return reviews;
+    }
 }

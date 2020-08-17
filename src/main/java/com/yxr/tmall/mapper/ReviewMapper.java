@@ -31,4 +31,6 @@ public interface ReviewMapper extends BaseMapper<Review> {
 
 //    查询二级以及其所有子集回复
     List<Review> findByReplayId(@Param("chi好 ldId") Integer childId);
+
+    List<Review> findParentId(String id);
 }

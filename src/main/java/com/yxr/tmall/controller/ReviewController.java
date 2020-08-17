@@ -64,17 +64,24 @@ public class ReviewController {
 
 //    回复一条评论
     @PostMapping("/reply/review/{parentId}")
-    public R reply(@PathVariable String parentId,@RequestParam Review review){
+    public R reply(@PathVariable String parentId,@RequestParam Review review,HttpServletRequest httpServletRequest){
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user==null){
+            return R.error().message("请登录后发表或回复评论!");
+        }
 //     查询出父评论
         Review parentReview = reviewService.getById(parentId);
         int parseInt = Integer.parseInt(parentId);
         review.setPid(parseInt);
+        review.setUid(user.getId());
+        review.setNickname(user.getName());
         reviewService.save(review);
         return R.ok();
     }
     @GetMapping("/selectChildrenReviews/{parentId}")
     public R selectChildrenReviews(@PathVariable String id){
-        List<Review> reviews = reviewService.selectAllReview(id);
+        List<Review> reviews = reviewService.selectByparentId(id);
         return R.ok().data("reviews",reviews);
     }
 

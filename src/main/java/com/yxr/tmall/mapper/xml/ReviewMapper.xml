@@ -12,4 +12,7 @@
     <select id="findByReplayId" resultType="com.yxr.tmall.entity.Review">
         select * from review where vid=#{childId}
     </select>
+    <select id="findParentId" resultType="com.yxr.tmall.entity.Review">
+        select * from review where pid=#{id}
+    </select>
 </mapper>

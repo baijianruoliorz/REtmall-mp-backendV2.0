@@ -17,6 +17,9 @@ public interface ReviewService extends IService<Review> {
 
     List<Review> selectAllReview(String id);
 
+    List<Review> selectByparentId(String id);
+
+
 //   查询评论列表
  //   List<Review> listReview();
 //    保存评论
