@@ -11,6 +11,7 @@ import com.yxr.tmall.service.ReviewService;
 import com.yxr.tmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -117,6 +118,8 @@ public class UserController {
        List<Review> reviews=reviewService.selectAllReview(id);
        return R.ok().data("reviews",reviews);
     }
+
+
 
 
 
