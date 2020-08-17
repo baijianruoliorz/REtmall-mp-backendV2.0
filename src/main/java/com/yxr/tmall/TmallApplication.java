@@ -12,9 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableCaching  //启动缓存
 
 public class TmallApplication {
-    static {
-        PortUtil.checkPort(6379,"Redis 服务端",true);
-    }
+//    static {
+//        PortUtil.checkPort(6379,"Redis 服务端",true);
+//    }
 
     public static void main(String[] args) {
        // sapplication.setBannerMode(Banner.Mode.OFF*);

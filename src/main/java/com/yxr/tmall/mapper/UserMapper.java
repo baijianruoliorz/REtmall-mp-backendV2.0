@@ -32,5 +32,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     void keepTokenByIds(@Param("id") String id);
 
-    List<Review> selectList(String id);
+   // List<Review> selectList(String id);
 }
