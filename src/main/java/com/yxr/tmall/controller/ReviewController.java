@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -62,12 +63,19 @@ public class ReviewController {
     }
 
 //    回复一条评论
-    @PostMapping("/reply/review")
-    public R reply(@RequestParam Review review){
+    @PostMapping("/reply/review/{parentId}")
+    public R reply(@PathVariable String parentId,@RequestParam Review review){
 //     查询出父评论
-
+        Review parentReview = reviewService.getById(parentId);
+        int parseInt = Integer.parseInt(parentId);
+        review.setPid(parseInt);
+        reviewService.save(review);
         return R.ok();
-
+    }
+    @GetMapping("/selectChildrenReviews/{parentId}")
+    public R selectChildrenReviews(@PathVariable String id){
+        List<Review> reviews = reviewService.selectAllReview(id);
+        return R.ok().data("reviews",reviews);
     }
 
 
