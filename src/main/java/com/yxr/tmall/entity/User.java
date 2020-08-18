@@ -1,6 +1,7 @@
 package com.yxr.tmall.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -42,6 +43,9 @@ public class User implements Serializable {
 
     private String avator;
 
+//这个作为jwt权限验证token
+    @TableField(exist = false)
+    private String tokens;
 
 
 }

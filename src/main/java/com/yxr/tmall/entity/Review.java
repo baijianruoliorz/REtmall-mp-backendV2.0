@@ -58,7 +58,7 @@ public class Review implements Serializable {
     @TableField(exist = false)
     private Review parentComment;
 //评论的用户名
-    @TableField(exist = false)
+@TableField(exist = false)
     private String nickname;
 
 

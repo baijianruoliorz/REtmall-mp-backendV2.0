@@ -9,6 +9,7 @@ import com.yxr.tmall.exceptionhandler.GuliException;
 import com.yxr.tmall.mapper.UserMapper;
 import com.yxr.tmall.service.ReviewService;
 import com.yxr.tmall.service.UserService;
+import com.yxr.tmall.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -78,7 +79,12 @@ public class UserController {
         if (userLogin==null){
             throw new GuliException(20001,"用户名或密码错误!!!");
         }else {
+
+//            登陆成功,返回token
+            String tokens = JwtUtils.createToken(userLogin);
+            userLogin.setTokens(tokens);
             return R.ok().data("user",userLogin);
+
         }
     }
     @GetMapping("/logout/{id}")
