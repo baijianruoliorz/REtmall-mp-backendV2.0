@@ -20,7 +20,7 @@ import java.util.Map;
  * @author liqiqi_tql
  * @date 2020/8/18 -13:07
  */
-@Slf4j
+@Slf4j                                        //需要token的路径 authorization: token
 @WebFilter(filterName = "JwtFilter", urlPatterns = "/secure/*")
 public class JwtFilter implements Filter {
     @Override

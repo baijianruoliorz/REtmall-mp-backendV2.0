@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableCaching  //启动缓存
 @ServletComponentScan(basePackages = "com.yxr.tmall.filter") //过滤器生效位置
-
 public class TmallApplication {
 //    static {
 //        PortUtil.checkPort(6379,"Redis 服务端",true);
