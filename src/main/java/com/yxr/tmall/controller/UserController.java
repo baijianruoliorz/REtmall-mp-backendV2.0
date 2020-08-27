@@ -14,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -50,11 +54,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public R login(@RequestBody User user, HttpServletRequest request,HttpSession httpSession){
+    public R login(@RequestBody User user, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) throws UnsupportedEncodingException {
         User user2 = userService.queryUserByname(user.getName());
 
         HttpSession session = request.getSession();
-
         System.out.println("+++++++");
         System.out.println(session.getId()==httpSession.getId());
         if (user2==null){
@@ -83,6 +86,14 @@ public class UserController {
 //            登陆成功,返回token
             String tokens = JwtUtils.createToken(userLogin);
             userLogin.setTokens(tokens);
+            String remember=request.getParameter("remember-me");
+//            设置cookie,cookie的name是user也可以写成remember,需要解码
+            Cookie cookie=new Cookie("user", URLEncoder.encode(user.getName()+"-"+user.getPassword(),"UTF-8"));
+            int maxAge="1".equals(remember)?24*60*60:0;
+//            一天
+            cookie.setMaxAge(maxAge);
+            response.addCookie(cookie);
+//            之后取cookie就是前端的操作
             return R.ok().data("user",userLogin);
 
         }
