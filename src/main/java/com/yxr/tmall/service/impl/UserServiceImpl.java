@@ -50,6 +50,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.getUserByToken(token);
     }
 
+    @Override
+    public List<User> orgetList() {
+
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+        wrapper.eq("id",1)
+                .or()
+                .between("id",3,6);
+        List<User> users = userMapper.selectList(wrapper);
+        return users;
+    }
+
 //    @Override
 //    public List<Review> selectAllReview(String id) {
 //

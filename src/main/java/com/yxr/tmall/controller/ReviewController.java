@@ -50,6 +50,7 @@ public class ReviewController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User)session.getAttribute("user");
         if (user==null){
+//            这个时候就不需要返回值的事情了
             throw new GuliException(20001,"您当前未登录,请登录后发表评论!!!");
         }
         review.setUid(user.getId());
@@ -80,8 +81,8 @@ public class ReviewController {
         return R.ok();
     }
     @GetMapping("/selectChildrenReviews/{parentId}")
-    public R selectChildrenReviews(@PathVariable String id){
-        List<Review> reviews = reviewService.selectByparentId(id);
+    public R selectChildrenReviews(@PathVariable String partntId){
+        List<Review> reviews = reviewService.selectByparentId(partntId);
         return R.ok().data("reviews",reviews);
     }
 

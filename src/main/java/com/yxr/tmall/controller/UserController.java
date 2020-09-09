@@ -1,6 +1,7 @@
 package com.yxr.tmall.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yxr.tmall.commonUtils.R;
 import com.yxr.tmall.config.MD5;
 import com.yxr.tmall.entity.Review;
@@ -10,6 +11,7 @@ import com.yxr.tmall.mapper.UserMapper;
 import com.yxr.tmall.service.ReviewService;
 import com.yxr.tmall.service.UserService;
 import com.yxr.tmall.utils.JwtUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.GET;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -86,6 +89,7 @@ public class UserController {
 //            登陆成功,返回token
             String tokens = JwtUtils.createToken(userLogin);
             userLogin.setTokens(tokens);
+//            前端复选框要remember-me并且默认值为0,勾选值为1
             String remember=request.getParameter("remember-me");
 //            设置cookie,cookie的name是user也可以写成remember,需要解码
             Cookie cookie=new Cookie("user", URLEncoder.encode(user.getName()+"-"+user.getPassword(),"UTF-8"));
@@ -122,6 +126,7 @@ public class UserController {
     @GetMapping("whoami/{id}")
     public R whoAmI(@PathVariable String id){
         User user = userService.getById(id);
+        user.setPassword("QAQ这个可查不到哦");
         return R.ok().data("You are...:",user);
     }
     @GetMapping(("/saveUserByToken"))
@@ -135,9 +140,37 @@ public class UserController {
        List<Review> reviews=reviewService.selectAllReview(id);
        return R.ok().data("reviews",reviews);
     }
+//以下接口进行一些小实验
+//    and接口的使用方法
+    @GetMapping("test/getUser/{id}")
+    public R getUser(@PathVariable String id){
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+        wrapper.and(i->i.eq("name","liqiqi").eq("id",id));
+        List<User> list = userService.list(wrapper);
+        return R.ok().data("list",list);
+    }
+//    不同于and 如果使用多个sql eq的话效果是会把所有满足条件的全部查询出来
 
+//or接口的使用方法\
+    @GetMapping("test/orgetUser/{id}")
+    public R orgetUser(@PathVariable String id) throws Exception{
 
+        //显然这个between也是左边是闭区间,右边是开区间
+//        不要使用尾行注释!!!这个注释规范也很重要呢
+      List<User> list= userService.orgetList();
+        return R.ok().data("list",list);
 
+    }
+
+//    groupBy接口
+    @GetMapping("test/groupBy/{id}")
+    public R groupGetUser(@PathVariable String id){
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+        wrapper.eq("id",id)
+                .groupBy("avator");
+        List<User> list = userService.list(wrapper);
+        return R.ok().data("list",list);
+    }
 
 
 }

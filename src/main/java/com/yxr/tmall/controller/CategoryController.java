@@ -11,6 +11,7 @@ import com.yxr.tmall.mapper.ProductMapper;
 import com.yxr.tmall.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,11 +42,18 @@ private CategoryMapper categoryMapper;
 //default
 //返回所有category
     @GetMapping("/categories")
+    @Cacheable(key = "'list'",value = "lists")
     public R list(){
         List<Category> list=categoryService.list(null);
         return R.ok().data("list",list);
     }
 
+    @GetMapping("/categories/1")
+    @Cacheable(key = "'list'",value = "lists")
+    public List<Category> lists(){
+        List<Category> list=categoryService.list(null);
+        return list;
+    }
 
 
 

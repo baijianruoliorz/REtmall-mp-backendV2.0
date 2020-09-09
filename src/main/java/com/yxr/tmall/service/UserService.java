@@ -25,5 +25,7 @@ public interface UserService extends IService<User> {
 
     User getUserByToken(String token);
 
+    List<User> orgetList();
+
     //List<Review> selectAllReview(String id);
 }

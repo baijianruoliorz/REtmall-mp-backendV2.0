@@ -23,8 +23,11 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> impleme
 
     @Autowired
     private ReviewMapper reviewMapper;
+    @Autowired
+    private ReviewService reviewService;
     @Override
     public List<Review> selectAllReview(String id) {
+
        return reviewMapper.selectList(new QueryWrapper<Review>().eq("uid",id));
     }
 

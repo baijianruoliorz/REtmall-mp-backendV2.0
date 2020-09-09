@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @author liqiqi_tql
  * @date 2020/8/9 -0:13
  */
+@Configuration
 public class CorsConfig extends WebMvcConfigurerAdapter {
 
         @Override
