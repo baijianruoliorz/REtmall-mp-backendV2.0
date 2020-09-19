@@ -97,6 +97,7 @@ private CategoryMapper categoryMapper;
 //        对id进行排序
         wrapper.orderByDesc("id");
         categoryService.page(pageCategories,wrapper);
+
         long total=pageCategories.getTotal();
 //        数据的list集合
         List<Category> records=pageCategories.getRecords();
