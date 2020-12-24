@@ -53,6 +53,7 @@ public class JwtFilter implements Filter {
                 response.getWriter().write("token不合法！");
                 return;
             }
+//            这里就获取了token保存的id name数据,可以用来跨域了.
             Integer id = userData.get("id").asInt();
             String name = userData.get("name").asString();
            // String userName = userData.get("userName").asString();

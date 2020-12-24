@@ -6,9 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yxr.tmall.commonUtils.R;
 import com.yxr.tmall.entity.Category;
 import com.yxr.tmall.entity.Product;
+import com.yxr.tmall.entity.Test;
 import com.yxr.tmall.mapper.CategoryMapper;
-import com.yxr.tmall.mapper.ProductMapper;
 import com.yxr.tmall.service.CategoryService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,52 +25,62 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author liqiqiorz
  * @since 2020-08-08
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/tmall/category")
 public class CategoryController {
 
 
-@Autowired
-private CategoryMapper categoryMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
     @Autowired
     private CategoryService categoryService;
-//default
+
+    private final Test test;
+
+
+
+@GetMapping("/test1")
+public R test1(){
+    return R.ok().data("test",test);
+    //{"success":true,"code":20000,"message":"成功","data":{"test":{"age":13,"name":"liqiqiorz","gender":"man"}},"i":3}
+}
+    //default
 //返回所有category
     @GetMapping("/categories")
-    @Cacheable(key = "'list'",value = "lists")
-    public R list(){
-        List<Category> list=categoryService.list(null);
-        return R.ok().data("list",list);
+    @Cacheable(key = "'list'", value = "lists")
+    public R list() {
+        List<Category> list = categoryService.list(null);
+        return R.ok().data("list", list);
     }
 
     @GetMapping("/categories/1")
-    @Cacheable(key = "'list'",value = "lists")
-    public List<Category> lists(){
-        List<Category> list=categoryService.list(null);
+    @Cacheable(key = "'list'", value = "lists")
+    public List<Category> lists() {
+        List<Category> list = categoryService.list(null);
         return list;
     }
 
 
-
-//    default
+    //    default
 //分页加多条件查询:1配插件 educonfig 2写方法
     @GetMapping("/categories/{current}/{limit}")
     public R pageListcategories(@PathVariable long current,
-                                @PathVariable long limit){
+                                @PathVariable long limit) {
         Page<Category> pageCategories = new Page<>(current, limit);
 //        框架把所有数据封装到pageCatgegories
-        categoryService.page(pageCategories,null);
+        categoryService.page(pageCategories, null);
 //        总记录数
-        long total=pageCategories.getTotal();
+        long total = pageCategories.getTotal();
 //        数据的list集合
-        List<Category> records=pageCategories.getRecords();
-        return R.ok().data("total",total).data("rows",records);
+        List<Category> records = pageCategories.getRecords();
+        return R.ok().data("total", total).data("rows", records);
 //        以上方法等同于
         //        Map map=new HashMap();
 //        map.put("total",total);
@@ -77,74 +88,78 @@ private CategoryMapper categoryMapper;
 //        return R.ok().data(map);   这个方法也可以，因为data有map封装，也有key value封装
 
     }
-//    多条件带分页功能
+
+    //    多条件带分页功能
     @PostMapping("categoriesCondition/{current}/{limit}")
     public R pageCategoriesCondition(@PathVariable long current,
                                      @PathVariable long limit,
-                                     @RequestBody(required = false) Category category){
-        Page<Category> pageCategories =new Page<>(current,limit);
+                                     @RequestBody(required = false) Category category) {
+        Page<Category> pageCategories = new Page<>(current, limit);
 //      构建条件
-        QueryWrapper<Category> wrapper=new QueryWrapper<>();
+        QueryWrapper<Category> wrapper = new QueryWrapper<>();
 //        多条件组合查询,用判断拼接sql
         Integer id = category.getId();
         String name = category.getName();
-        if (id!=0){
-            wrapper.ge("id",id);
+        if (id != 0) {
+            wrapper.ge("id", id);
         }
-        if (!StringUtils.isEmpty(name)){
-            wrapper.like("name",name);
+        if (!StringUtils.isEmpty(name)) {
+            wrapper.like("name", name);
         }
 //        对id进行排序
         wrapper.orderByDesc("id");
-        categoryService.page(pageCategories,wrapper);
+        categoryService.page(pageCategories, wrapper);
 
-        long total=pageCategories.getTotal();
+        long total = pageCategories.getTotal();
 //        数据的list集合
-        List<Category> records=pageCategories.getRecords();
-        return R.ok().data("total",total).data("rows",records);
+        List<Category> records = pageCategories.getRecords();
+        return R.ok().data("total", total).data("rows", records);
     }
-//default
+
+    //default
 //    添加分类的方法
     @PostMapping("addCategory")
-    public R addCategory(@RequestBody Category category){
+    public R addCategory(@RequestBody Category category) {
         boolean save = categoryService.save(category);
-        if (save){
+        if (save) {
             return R.ok();
-        }else {
+        } else {
             return R.error();
         }
     }
 
-//    修改分类: 1.查询分类回显 2.修改
+    //    修改分类: 1.查询分类回显 2.修改
     @GetMapping("getCategory/{id}")
-    public R getCategory(@PathVariable String id){
+    public R getCategory(@PathVariable String id) {
         Category byId = categoryService.getById(id);
-        return R.ok().data("category",byId);
+        return R.ok().data("category", byId);
     }
-//修改,一般来说用put提交,但是参数是@requBody
-    @PostMapping R updateCategory(@RequestBody Category category) {
+
+    //修改,一般来说用put提交,但是参数是@requBody
+    @PostMapping
+    R updateCategory(@RequestBody Category category) {
         boolean b = categoryService.updateById(category);
-    if(b){
-        return R.ok();
-    }else {
-        return R.error();
-    }
+        if (b) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
 
     }
 
     @GetMapping("products/{id}")
-    public R CProducts(@PathVariable String id){
+    public R CProducts(@PathVariable String id) {
         Category category = categoryService.getById(id);
         int i = Integer.parseInt(id);
         List<Product> products = categoryMapper.searchProductsByCategoryId(i);
         category.setProducts(products);
-        return R.ok().data("category",category);
+        return R.ok().data("category", category);
     }
 
     @GetMapping("getCategorys/{id}")
-    public R getCategorys(@PathVariable String id){
+    public R getCategorys(@PathVariable String id) {
         Category category = categoryService.getById(id);
-        return R.ok().data("category",category);
+        return R.ok().data("category", category);
     }
 
 }
